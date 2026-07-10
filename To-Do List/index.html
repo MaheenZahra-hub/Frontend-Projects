@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Field Notes — Cafe Journal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght=0,500;0,600;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="accessibilityAnnouncer" class="sr-only" aria-live="polite"></div>
+
+<div class="page-wrapper">
+  
+  <!-- Interactive Cozy Mascot Companion -->
+  <div class="mascot-companion" id="mascotCompanion" aria-hidden="true" title="Hello, keeper of notes!">
+    <div class="mascot-bubble" id="mascotBubble">Ready to organize?</div>
+    <svg class="sprite-svg" id="mascotSvg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+      <!-- Leaf Stem (Grows on Task Add) -->
+      <path class="mascot-stem" d="M60,30 Q65,15 75,18 Q72,28 60,32" fill="#BCC86F" stroke="#4A1521" stroke-width="1.5"/>
+      <!-- Mushroom/Pastry Cap -->
+      <circle cx="60" cy="65" r="34" fill="#A22A3A" stroke="#4A1521" stroke-width="2"/>
+      <circle cx="44" cy="50" r="6" fill="#E8A7A1" opacity="0.4"/>
+      <circle cx="76" cy="54" r="5" fill="#E8A7A1" opacity="0.4"/>
+      <!-- Face -->
+      <circle cx="60" cy="71" r="23" fill="#FFFDF9" stroke="#4A1521" stroke-width="1.5"/>
+      <!-- Rosy Cheeks -->
+      <circle cx="44" cy="74" r="4" fill="#E8A7A1"/>
+      <circle cx="76" cy="74" r="4" fill="#E8A7A1"/>
+      
+      <!-- Upgraded Eyes Layered for Micro-State Arc Shifting -->
+      <g class="mascot-eyes-group">
+        <path class="mascot-eye left" d="M48.5,69 A2.5,2.5 0 1,1 53.5,69 A2.5,2.5 0 1,1 48.5,69" fill="#4A1521"/>
+        <path class="mascot-eye right" d="M66.5,69 A2.5,2.5 0 1,1 71.5,69 A2.5,2.5 0 1,1 66.5,69" fill="#4A1521"/>
+      </g>
+
+      <!-- Shy Smile -->
+      <path d="M58,74 Q60,76 62,74" stroke="#4A1521" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+      <!-- Little Pastry Feet -->
+      <circle cx="48" cy="100" r="6" fill="#F5CB99" stroke="#4A1521" stroke-width="1.5"/>
+      <circle cx="72" cy="100" r="6" fill="#F5CB99" stroke="#4A1521" stroke-width="1.5"/>
+    </svg>
+  </div>
+
+  <div class="main-container">
+    <header class="hero">
+      <p class="eyebrow">a quiet place to keep your tasks</p>
+      <h1>Field Notes</h1>
+      <svg class="sprig" viewBox="0 0 320 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M2 12 H318" stroke="currentColor" stroke-width="1" opacity="0.15"/>
+        <path d="M160 12 C 150 4, 140 4, 132 12 C 140 6, 150 6, 160 12 Z" fill="currentColor" opacity="0.3"/>
+        <path d="M160 12 C 170 4, 180 4, 188 12 C 180 6, 170 6, 160 12 Z" fill="currentColor" opacity="0.3"/>
+        <circle cx="160" cy="12" r="2.5" fill="currentColor" opacity="0.5"/>
+      </svg>
+    </header>
+
+    <main class="board">
+      <form class="add-row" id="addForm" autocomplete="off">
+        <input
+          type="text"
+          id="taskInput"
+          placeholder="Plant a new task…"
+          maxlength="140"
+          aria-label="New task"
+        />
+        <button type="submit" class="add-btn" aria-label="Add task">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M9 2V16M2 9H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </form>
+
+      <nav class="filters" id="filters" role="tablist" aria-label="Filter tasks">
+        <button class="filter-btn is-active" data-filter="all" role="tab" aria-selected="true">All</button>
+        <button class="filter-btn" data-filter="active" role="tab" aria-selected="false">Active</button>
+        <button class="filter-btn" data-filter="completed" role="tab" aria-selected="false">Done</button>
+      </nav>
+
+      <ul class="task-list" id="taskList"></ul>
+
+      <div class="empty-state" id="emptyState" hidden>
+        <svg class="floating-svg" width="40" height="40" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+          <path d="M17 30C17 30 6 24 6 14.5C6 9.8 9.8 6 14.5 6C16.3 6 17.9 6.9 19 8.3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          <path d="M17 30C17 30 28 24 28 14.5C28 9.8 24.2 6 19.5 6C17.7 6 16.1 6.9 15 8.3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+        <p id="emptyText">Nothing planted yet. Add your first task above.</p>
+      </div>
+    </main>
+
+    <footer class="stats-bar">
+      <span id="statsText">0 of 0 tasks done</span>
+      <div class="progress-track" aria-hidden="true">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <button class="clear-btn" id="clearCompleted" hidden>Clear done</button>
+    </footer>
+  </div>
+
+</div>
+
+<dialog id="confirmModal" class="custom-modal">
+  <div class="modal-content">
+    <h3>Clear Completed Tasks?</h3>
+    <p>This will permanently clear all checked items from your active journal workspace.</p>
+    <div class="modal-actions">
+      <button id="cancelModalBtn" class="modal-btn secondary">Cancel</button>
+      <button id="confirmModalBtn" class="modal-btn primary">Clear Entries</button>
+    </div>
+  </div>
+</dialog>
+
+<script src="script.js"></script>
+</body>
+</html>
